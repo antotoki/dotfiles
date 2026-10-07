@@ -5,6 +5,9 @@ return {
         opts = {
             filewatching = "off",
             silent = true,
+            extensions = {
+                razor = { enabled = false },
+            },
         },
         config = function(_, opts)
             require("roslyn").setup(opts)

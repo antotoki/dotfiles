@@ -60,3 +60,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
     end,
 })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        local cwd = vim.fn.getcwd()
+        local has_dotnet = vim.fn.glob(cwd .. "/*.sln") ~= "" or vim.fn.glob(cwd .. "/**/*.csproj") ~= ""
+        if has_dotnet then
+            vim.opt.makeprg = "dotnet build"
+            vim.opt.errorformat = table.concat({
+                "%f(%l\\,%c): error %n: %m",
+                "%f(%l\\,%c): warning %n: %m",
+                "%f(%l\\,%c): %trror %m",
+                "%f(%l\\,%c): %tarning %m",
+                "%-G%.%#",
+            }, ",")
+        end
+    end,
+})
